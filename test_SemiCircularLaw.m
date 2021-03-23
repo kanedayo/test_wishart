@@ -3,20 +3,19 @@ N=1000;
 bw=0.1;
 cirR = exp(2j*pi*[1:100]/100); % Radius
 
-%for L=[ 1e1 1e2 1e3 1e4]
-%for L=[ 1e1 1e2 1e3 5e3 ]
-%for L=[ 1e0:1e0:1e1-1 1e1:1e1:1e2-1 1e2:1e2:4e2  ]
-%for L=[ 1e0:1e0:1e1-1 1e1:1e1:1e2-1 ]
 for L=[ 1e1 1e2 1e3 ]
   iter=ceil(N/L);
   Y=zeros(L,iter);
 
   for n=1:iter
     %平均値0分散1の正規分布に従うNxN行列
-    %H=randn(L);
-    H=(randn(L)+1j*randn(L))/sqrt( 2 );
     %行列サイズに依存しない様にsqrt(L)で(正規化固有値)
-    Y(:,n)=eig(H)/sqrt(L);
+    %H=randn(L)/sqrt(L);
+    H=(randn(L)+1j*randn(L))/sqrt( 2 * L );
+
+    %H=H/sqrt(L);
+    R=( H + H')/2; % symmetrise
+    Y(:,n)=eig(R);
   end
 
   range=[-2 +2];
