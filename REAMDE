@@ -1,10 +1,61 @@
+ToDo
+test_MarchenkoPasturLaw.m において、
+「Nrx<Ntx」時は問題なさそうだが、
+「Nrx>Ntx」時の動作が、
+desmos[*1]で実装したモデルと異なる。
+
+---
 (H):
   Circular law: ランダム行列
   Wigner's Semicircle Law: ランダム行列(対称/エルミート)
-  行列サイズ(小): 円からはみ出るサンプルも散見される。
-  行列サイズ(大): 円の中に収まる。
+    行列サイズ(小): 円からはみ出るサンプルも散見される。
+    行列サイズ(大): 円の中に収まる。
+
+(H'*H):
+  MP-Law( Marchenko–Pastur Law ): Wishart Matrix
+  Nrx < Ntx : Tx-Div
+  Nrx > Ntx : Rx-Div(MRC) : (★やや動作が怪しい)[*1]
 
 ---
   自己平均性: 多くの行列の平均ではなく、 ひとつの行列の中で、
   平均量の性質が現れることを言う。
   円則、半円則は、サイズの大きいランダム行列の自己平均性を示す。
+
+---
+■ 確率変数の和と積[*2]
+※ X,Yが独立でも 「 V[XY] ≠ V[X]V[Y] 」なので注意！！
+
+E[X+Y] = E[X] + E[Y]
+E[aX] = a*E[X]
+
+X,Yが独立な時、
+E[X*Y] = E[X] * E[Y]
+
+V[X*Y] = V[X]*V[Y] + μx2*V[Y] + μy2*V[X]
+       = (V[X]+μx2)*(V[Y]+μy2) − μx2*μy2
+// μx2=E[X]^2, μy2=E[Y]^2
+
+---
+エルミート(対称)行列の素性(作り方/作られ方)によって、平均/分散が異なる。
+
+H ~ N(0,sigma)
+
+R = ( H + H')/2;
+//=>  R ~ N(0,sigma) // ガウス型アンサンブル(GOE,GUE)
+
+R = ( H * H');
+R = ( H'* H );
+//=>  R ~ N(0,sigma^2) // ???(要確認)
+
+
+---
+ウィシャート行列の固有値分布
+[*1] https://www.desmos.com/calculator/0erdf2dkrf?lang=ja
+
+確率変数の和と積
+[*2] https://mathwords.net/sekinokitaiti
+
+
+ランダム行列と漸近固有値分布:唐沢好男
+http://www.radio3.ee.uec.ac.jp/ronbun/Random_Matrix-YK-014.pdf
+
